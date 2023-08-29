@@ -1,25 +1,21 @@
 {
     "fransize": [
         {
-            "lokacija": "jst",
+            "lokacija": "ljubljana",
             "osebe": [
                 {
-                    "ime_priimek": "js",
-                    "starost": "20",
-                    "pozicija": "kruh",
-                    "mesecna_placa": 200
+                    "ime_priimek": "sara",
+                    "starost": 40,
+                    "pozicija": "blagajna",
+                    "mesecna_placa": 980
                 },
                 {
-                    "ime_priimek": "miha",
-                    "starost": "40",
-                    "pozicija": "sadje",
-                    "mesecna_placa": 400
+                    "ime_priimek": "janez",
+                    "starost": 50,
+                    "pozicija": "varnostnik",
+                    "mesecna_placa": 1000
                 }
             ]
-        },
-        {
-            "lokacija": "haha 123",
-            "osebe": []
         }
     ]
 }

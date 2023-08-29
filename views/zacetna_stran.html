@@ -1,0 +1,22 @@
+% rebase('osnova.tpl')
+<!-- Main container -->
+<nav class="level">
+    <div class="level-left">
+        <div class="buttons has-addons field is-horizontal">
+            % for id_fransize, fransiza in enumerate(fransize):
+            <a href="/fransiza/{{id_fransize}}/" class="button" name="id_fransize" value="{{id_fransize}}">
+                {{fransiza.ime}}
+                <span class="tag is-rounded">{{fransiza.stevilo_zaposlenih()}}</span>
+            </a>
+            % end
+        </div>
+
+    </div>
+
+    <div class="level-right">
+            <div class="level-item">
+                <a class="button is-info" href="/dodaj-fransizo/">dodaj fransizo</a>
+            </div>
+        </form>
+    </div>
+</nav>
