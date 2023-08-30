@@ -6,12 +6,18 @@ class Stanje:
 
     def dodaj_fransizo(self, fransiza):
         self.fransize.append(fransiza)
+        return len(self.fransize) - 1
 
     def preveri_nove_fransize(self, nova_fransiza):
         for fransiza in self.fransize:
             if fransiza.lokacija == nova_fransiza:
                 return True
         return False
+    
+    def preveri_podatke_nove_fransize(self, nova_fransiza):
+        for fransiza in self.fransize:
+            if fransiza.lokacija == nova_fransiza.lokacija:
+                return {"lokacija": "franšiza na tej lokaciji že obstaja"}
 
     def v_slovar(self):
         return {
@@ -27,7 +33,7 @@ class Stanje:
             ]
         )
         return stanje
-
+    
     def v_datoteko(self, ime_datoteke):
         with open(ime_datoteke, "w") as datoteka:
             slovar = self.v_slovar()
@@ -35,7 +41,7 @@ class Stanje:
 
     @staticmethod
     def iz_datoteke(ime_datoteke):
-        with open(ime_datoteke) as datoteka:
+        with open(ime_datoteke, "r") as datoteka:
             slovar = json.load(datoteka)
             return Stanje.iz_slovarja(slovar)
 
@@ -54,10 +60,16 @@ class Fransiza:
                 return True
         return False
 
+    def preveri_podatke_nove_osebe(self, nova_oseba):
+        for oseba in self.osebe:
+            if oseba.ime_priimek == nova_oseba.ime_priimek:
+                return {"ime_priimek": "Ta oseba že dela tukaj"}
+
+
     def placa_celotne_fransize(self):
         placa_fransize = 0
         for oseba in self.osebe:
-            placa_fransize =  placa_fransize + int(oseba.mesecna_placa)
+            placa_fransize =  placa_fransize + oseba.mesecna_placa
         return placa_fransize
 
     def stevilo_zaposlenih(self):
@@ -65,12 +77,8 @@ class Fransiza:
         return zaposleni
     
     def odpusti_osebo(self, odpuscena_oseba):
-        zacetno_stevilo = len(self.osebe)
-        for oseba in self.osebe:
-            if oseba.ime == odpuscena_oseba:
-                self.osebe.remove(odpuscena_oseba)
-        if zacetno_stevilo == len(self.osebe):
-            return {"oseba": "ta oseba ne dela pri vas"}
+        self.osebe.remove(odpuscena_oseba)
+        
 
     def v_slovar(self):
         return {
@@ -92,7 +100,7 @@ class Oseba:
         self.ime_priimek = ime_priimek
         self.starost = starost
         self.pozicija = pozicija
-        self.mesecna_placa = int(mesecna_placa)
+        self.mesecna_placa = mesecna_placa
     
 
     def spremeba_place(self, kolicina):

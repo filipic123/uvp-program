@@ -1,0 +1,46 @@
+{
+    "fransize": [
+        {
+            "lokacija": "ljubljana",
+            "osebe": [
+                {
+                    "ime_priimek": "sara",
+                    "starost": 40,
+                    "pozicija": "blagajna",
+                    "mesecna_placa": 980
+                },
+                {
+                    "ime_priimek": "nejc",
+                    "starost": "24",
+                    "pozicija": "banka",
+                    "mesecna_placa": 90
+                },
+                {
+                    "ime_priimek": "js",
+                    "starost": "24",
+                    "pozicija": "banka",
+                    "mesecna_placa": 900
+                }
+            ]
+        },
+        {
+            "lokacija": "ptuj",
+            "osebe": []
+        },
+        {
+            "lokacija": "nova gorica",
+            "osebe": [
+                {
+                    "ime_priimek": "nejc",
+                    "starost": "23",
+                    "pozicija": "jabolka",
+                    "mesecna_placa": 90
+                }
+            ]
+        },
+        {
+            "lokacija": "koper",
+            "osebe": []
+        }
+    ]
+}

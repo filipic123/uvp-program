@@ -1,0 +1,124 @@
+% rebase('base.html')
+<!-- Main container -->
+<nav class="level">
+    <div class="level-left">
+    <div class="level-item">
+        <a class="button is-info" href="/dodaj-fransizo/">Dodaj franšizo</a>
+    </div>
+    </div>
+    
+</div>  
+</dib>
+</nav>
+<nav class="level">
+    <div class="level-left">
+        <div class="buttons has-addons field is-horizontal">
+            % for id_fransize, fransiza in enumerate(fransize):
+            % if fransiza == aktualna_fransiza:
+            <a class="button is-primary is-selected" name="id_fransize" value="{{id_fransize}}">
+                {{fransiza.lokacija}}&nbsp
+                <span class="tag is-rounded">zaposleni: {{fransiza.stevilo_zaposlenih()}}</span> &nbsp
+                <span class="tag is-rounded">mesečna plača &nbsp{{fransiza.placa_celotne_fransize()}}€</span>
+            </a>
+            % else:
+            <a href="/fransiza/{{id_fransize}}/" class="button" name="id_fransize" value="{{id_fransize}}">
+                {{fransiza.lokacija}}
+                <span class="tag is-rounded">{{fransiza.stevilo_zaposlenih()}}</span>
+                <span class="tag is-rounded">{{fransiza.placa_celotne_fransize()}}€</span>
+            </a>
+            % end
+            % end
+        </div>
+    </div>
+    </div>     
+</div>
+</nav>
+
+% if aktualna_fransiza:
+
+<table class="table is-hoverable is-fullwidth">
+    <thead>
+        <tr>
+            <form method="POST" action="/dodaj-osebo/{{id_aktualne_fransize}}/">
+                <td></td>
+                <td>
+                    <div class="control has-icons-left">
+                        <input class="input is-small" type="text" name="ime_priimek" placeholder="ime_priimek" >
+                        <span class="icon is-small is-left">
+                            <i class="far fa-clipboard-check"></i>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="control has-icons-left">
+                        <input class="input is-small" type="text" name="starost" placeholder="starost">
+                        <span class="icon is-small is-left">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="control has-icons-left">
+                        <input class="input is-small" type="text" name="pozicija" placeholder="pozicija">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-hand-holding"></i>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="control has-icons-left">
+                        <input class="input is-small" type="number" name="mesecna_placa" placeholder="mesečna_plača">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-dollar-sign"></i>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="control">
+                        <button class="button is-info is-small">dodaj osebo</button>
+                    </div>
+                    <td><div class="lever-right">
+                        <label for="sprememba1">kaj bi radi spremenili osebi:</label> 
+                    <select name="sprememba" id="spremembe"> 
+                        <option value="pozicijo">pozicijo</option> 
+                        <option value="placo">plačo</option> 
+                        <option value="lokacijo">lokacijo</option>  
+                    </select>
+                </td>   
+            </form>
+        </tr>
+
+    </thead>
+    <tbody>
+        % for id_osebe, oseba in enumerate(aktualna_fransiza.osebe):
+        <tr><td>
+                <form method="POST" action="/odpusti/{{id_aktualne_fransize}}/{{id_osebe}}/">
+                    <div class="control">
+                        <button class="button is-info is-small">odpusti osebo</button>
+                    </div> 
+                </form>
+            </td>
+
+            <td>{{ oseba.ime_priimek }}</td>
+            <td>{{ oseba.starost }}</td>
+            <td>{{ oseba.pozicija }}</td>
+            <td>{{ oseba.mesecna_placa }}€</td>
+            <td> 
+                <div class="control">
+                    <a class="button is-info is-small" href="/spremeni-osebi/{{id_aktualne_fransize}}/{{id_osebe}}/">spremeni</a>
+                </div>  
+            </td>
+            <td>         
+
+                <input class="input is-small" type="text" name="kolicina/kraj/pozicija" placeholder="delovno mesto/količino/kraj">
+                
+            </td>
+        </tr>
+        % end
+        
+    </tbody>
+</table>
+
+% else:
+
+<p>Nimate še nobene fransize. <a href="/dodaj-fransizo/">Dodajte jo.</a></p>

@@ -1,11 +1,12 @@
 import bottle
 from datetime import date
 from model import Stanje, Fransiza, Oseba
+import json
 
 SIFRIRNI_KLJUC = "To je poseben šifrirni ključ"
 
 def ime_uporabnikove_datoteke(uporabnisko_ime):
-    return f"stanja_uporabnikov/{uporabnisko_ime}.json"
+    return f"stanja/{uporabnisko_ime}.json"
 
 
 def stanje_trenutnega_uporabnika():
@@ -41,11 +42,12 @@ def prijava_get():
 def prijava_post():
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
     geslo = bottle.request.forms.getunicode("geslo")
-    if uporabnisko_ime == geslo:
+    if uporabnisko_ime == geslo and geslo != "":
         bottle.response.set_cookie("uporabnisko_ime", uporabnisko_ime, path="/", secret=SIFRIRNI_KLJUC)
         bottle.redirect("/")
     else:
-        return "Napaka ob prijavi"
+        return "Napaka ob prijavi" 
+    
 
 @bottle.post("/odjava/")
 def odjava_post():
@@ -62,61 +64,90 @@ def zacetna_stran():
     )
 
 @bottle.get("/fransiza/<id_fransize:int>/")
-def prikazi_fansizo(id_fransize):
+def prikazi_fransizo(id_fransize):
     stanje = stanje_trenutnega_uporabnika()
     fransiza = stanje.fransize[id_fransize]
     return bottle.template(
-        "fransiza.tpl",
-        fransiza=stanje.fransize,
+        "fransiza.html",
+        fransize=stanje.fransize,
         aktualna_fransiza=fransiza,
         id_aktualne_fransize=id_fransize,
     )
 
 
-@bottle.get("/dodaj-fansizo/")
+@bottle.get("/dodaj-fransizo/")
 def dodaj_fransizo_get():
     return bottle.template(
-        "dodaj_fransizo.tpl", napake={}, polja={}
+        "dodaj_fransizo.html", napake={}, polja={}
     )
 
 
-@bottle.post("/dodaj-fansizo/")
+@bottle.post("/dodaj-fransizo/")
 def dodaj_fransizo_post():
     stanje = stanje_trenutnega_uporabnika()
-    ime = bottle.request.forms.getunicode("ime")
-    fransiza = Fransiza(ime, osebe=[])
+    lokacija = bottle.request.forms.getunicode("lokacija")
+    fransiza = Fransiza(lokacija, osebe=[])
     napake = stanje.preveri_podatke_nove_fransize(fransiza)
     if napake:
-        polja = {"ime": ime}
-        return bottle.template("dodaj_fransizo.tpl", napake=napake, polja=polja)
+        polja = {"lokacija": lokacija}
+        return bottle.template("dodaj_fransizo.html", napake=napake, polja=polja)
     else:
         id_fransize = stanje.dodaj_fransizo(fransiza)
         shrani_stanje_trenutnega_uporabnika(stanje)
         bottle.redirect(url_fransize(id_fransize))
 
 
-@bottle.post("/opravi/<id_fransize:int>/<id_opravila:int>/")
-def opravi(id_fransize, id_opravila):
-    stanje = stanje_trenutnega_uporabnika()
-    fransiza = stanje.fransize[id_fransize]
-    oseba = fransiza.opravila[id_opravila]
-    oseba.opravi()
-    shrani_stanje_trenutnega_uporabnika(stanje)
-    bottle.redirect(url_fransize(id_fransize))
-
-@bottle.post("/dodaj-oseba/<id_fransize:int>/")
+@bottle.post("/dodaj-osebo/<id_fransize:int>/")
 def dodaj_osebo(id_fransize):
     stanje = stanje_trenutnega_uporabnika()
     fransiza = stanje.fransize[id_fransize]
-    opis = bottle.request.forms.getunicode("opis")
-    if bottle.request.forms["rok"]:
-        rok = date.fromisoformat(bottle.request.forms["rok"])
-    else:
-        rok = None
-    oseba = oseba(opis, rok)
-    fransiza.dodaj_osebo(oseba)
+    oseba = bottle.request.forms.getunicode("ime_priimek")
+    starost = bottle.request.forms.getunicode("starost")
+    pozicija = bottle.request.forms.getunicode("pozicija")
+    mesecna_placa = bottle.request.forms.getunicode("mesecna_placa")
+    oseba1 = Oseba(oseba, starost, pozicija, int(mesecna_placa))
+    fransiza.dodaj_osebo(oseba1)
     shrani_stanje_trenutnega_uporabnika(stanje)
     bottle.redirect(url_fransize(id_fransize))
+
+
+@bottle.post("/spremeni-osebi/<id_fransize:int>/<id_osebe:int>/")
+def spermeni_osebo(id_fransize, id_osebe):
+    stanje = stanje_trenutnega_uporabnika()
+    fransiza = stanje.fransize[id_fransize]
+    oseba = fransiza.osebe[id_osebe]
+    sprememba = bottle.request.forms.getunicode("sprememba")
+    kolicina_kraj_pozicija = bottle.request.forms.getunicode("kolicina/kraj/pozicija")
+    if sprememba == "placo":
+        oseba.sprememba_place(kolicina_kraj_pozicija)
+        shrani_stanje_trenutnega_uporabnika(stanje)
+        bottle.redirect(url_fransize(id_fransize))
+    if sprememba == "pozicijo":
+        oseba.sprememba_pozicije(kolicina_kraj_pozicija)
+        shrani_stanje_trenutnega_uporabnika(stanje)
+        bottle.redirect(url_fransize(id_fransize))
+    if sprememba == "lokacijo":
+        ime_priimek = oseba.ime_priimek
+        starost = oseba.starost
+        pozicija = oseba.pozicija
+        mesecna_placa = oseba.mesecna_placa
+        kolicina_kraj_pozicija.odpusti_osebo(oseba)
+        oseba = Oseba(ime_priimek, starost, pozicija, int(mesecna_placa))
+        kolicina_kraj_pozicija.dodaj_osebo(oseba)
+        shrani_stanje_trenutnega_uporabnika(stanje)
+        bottle.redirect(url_fransize(id_fransize))
+
+@bottle.post("/odpusti/<id_fransize:int>/<id_osebe:int>/")
+def odpusti(id_fransize, id_osebe):
+    stanje = stanje_trenutnega_uporabnika()
+    fransiza = stanje.fransize[id_fransize]
+    oseba = fransiza.osebe[id_osebe]
+    fransiza.odpusti_osebo(oseba)
+    shrani_stanje_trenutnega_uporabnika(stanje)
+    bottle.redirect(url_fransize(id_fransize))
+  
+
+
 
 
 @bottle.error(404)

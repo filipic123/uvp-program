@@ -1,11 +1,11 @@
-% rebase('osnova.tpl')
+% rebase('base.html')
 <!-- Main container -->
 <nav class="level">
     <div class="level-left">
         <div class="buttons has-addons field is-horizontal">
             % for id_fransize, fransiza in enumerate(fransize):
             <a href="/fransiza/{{id_fransize}}/" class="button" name="id_fransize" value="{{id_fransize}}">
-                {{fransiza.ime}}
+                {{fransiza.lokacija}}
                 <span class="tag is-rounded">{{fransiza.stevilo_zaposlenih()}}</span>
             </a>
             % end
@@ -15,7 +15,7 @@
 
     <div class="level-right">
             <div class="level-item">
-                <a class="button is-info" href="/dodaj-fransizo/">dodaj fransizo</a>
+                <a class="button is-info" href="/dodaj-fransizo/">Dodaj franšizo</a>
             </div>
         </form>
     </div>
