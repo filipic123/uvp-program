@@ -16,9 +16,9 @@
             % for id_fransize, fransiza in enumerate(fransize):
             % if fransiza == aktualna_fransiza:
             <a class="button is-primary is-selected" name="id_fransize" value="{{id_fransize}}">
-                {{fransiza.lokacija}}&nbsp
-                <span class="tag is-rounded">zaposleni: {{fransiza.stevilo_zaposlenih()}}</span> &nbsp
-                <span class="tag is-rounded">mesečna plača &nbsp{{fransiza.placa_celotne_fransize()}}€</span>
+                {{fransiza.lokacija}} &nbsp
+                <span class="tag is-rounded">število zaposlenih: {{fransiza.stevilo_zaposlenih()}}</span> &nbsp
+                <span class="tag is-rounded">mesečni strošek plač {{fransiza.placa_celotne_fransize()}} €</span>
             </a>
             % else:
             <a href="/fransiza/{{id_fransize}}/" class="button" name="id_fransize" value="{{id_fransize}}">
@@ -40,10 +40,14 @@
     <thead>
         <tr>
             <form method="POST" action="/dodaj-osebo/{{id_aktualne_fransize}}/">
-                <td></td>
+                <td>
+                    <div class="control">
+                        <button class="button is-info is-small">dodaj osebo</button>
+                    </div>
+                </td>
                 <td>
                     <div class="control has-icons-left">
-                        <input class="input is-small" type="text" name="ime_priimek" placeholder="ime_priimek">
+                        <input class="input is-small" type="text" name="ime_priimek" placeholder="ime priimek">
                         <span class="icon is-small is-left">
                             <i class="far fa-clipboard-check"></i>
                         </span>
@@ -59,7 +63,7 @@
                 </td>
                 <td>
                     <div class="control has-icons-left">
-                        <input class="input is-small" type="text" name="pozicija" placeholder="pozicija">
+                        <input class="input is-small" type="text" name="delovno_mesto" placeholder="delovno mesto">
                         <span class="icon is-small is-left">
                             <i class="fas fa-hand-holding"></i>
                         </span>
@@ -67,17 +71,13 @@
                 </td>
                 <td>
                     <div class="control has-icons-left">
-                        <input class="input is-small" type="number" name="mesecna_placa" placeholder="mesečna_plača">
+                        <input class="input is-small" type="number" name="mesecna_placa" placeholder="mesečna plača">
                         <span class="icon is-small is-left">
                             <i class="fas fa-dollar-sign"></i>
                         </span>
                     </div>
                 </td>
                 <td>
-                    <div class="control">
-                        <button class="button is-info is-small">dodaj osebo</button>
-                    </div>
-
                 </td>
             </form>
             <td>
@@ -114,28 +114,28 @@
             </td>
             <td>{{ oseba.ime_priimek }}</td>
             <td>{{ oseba.starost }}</td>
-            <td>{{ oseba.pozicija }}</td>
-            <td>{{ oseba.mesecna_placa }}€</td>
+            <td>{{ oseba.delovno_mesto }}</td>
+            <td>{{ oseba.mesecna_placa }} €</td>
             </form>
             <td>
                 <form method="POST" action="/spremeni-osebi/{{id_aktualne_fransize}}/{{id_osebe}}/">
                     <div class="control">
                         <button class="button is-info is-small">spremeni</a>
                     </div>
-
+            </td>
             <td>
                 <div class="lever-right">
 
                     <label for="sprememba1">kaj bi radi spremenili osebi:</label>
                     <select name="sprememba" id="spremembe">
                         <option value="placo">plačo</option>
-                        <option value="pozicijo">pozicijo</option>
+                        <option value="delovno_mesto">delovno mesto</option>
                     </select>
                 </div>
                 <class>
 
-                    <input class="input is-small" type="text" name="kolicina/pozicija"
-                        placeholder="delovno mesto/količino">
+                    <input class="input is-small" type="text" name="kolicina/delovno_mesto"
+                        placeholder="delovno mesto / sprememba plače">
                     </form>
             </td>
         </tr>
