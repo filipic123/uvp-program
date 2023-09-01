@@ -2,13 +2,13 @@
 <!-- Main container -->
 <nav class="level">
     <div class="level-left">
-    <div class="level-item">
-        <a class="button is-info" href="/dodaj-fransizo/">Dodaj franšizo</a>
+        <div class="level-item">
+            <a class="button is-info" href="/dodaj-fransizo/">Dodaj franšizo</a>
+        </div>
     </div>
+
     </div>
-    
-</div>  
-</dib>
+    </dib>
 </nav>
 <nav class="level">
     <div class="level-left">
@@ -30,8 +30,8 @@
             % end
         </div>
     </div>
-    </div>     
-</div>
+    </div>
+    </div>
 </nav>
 
 % if aktualna_fransiza:
@@ -43,7 +43,7 @@
                 <td></td>
                 <td>
                     <div class="control has-icons-left">
-                        <input class="input is-small" type="text" name="ime_priimek" placeholder="ime_priimek" >
+                        <input class="input is-small" type="text" name="ime_priimek" placeholder="ime_priimek">
                         <span class="icon is-small is-left">
                             <i class="far fa-clipboard-check"></i>
                         </span>
@@ -77,9 +77,14 @@
                     <div class="control">
                         <button class="button is-info is-small">dodaj osebo</button>
                     </div>
-                    
-                </td>   
+
+                </td>
             </form>
+            <td>
+                % if napaka3:
+                <p class="help is-danger">{{napaka3}}</p>
+                % end
+            </td>
         </tr>
 
     </thead>
@@ -95,44 +100,49 @@
             <td></td>
             <td>
                 % if napaka2:
-                <p class="help is-danger">vnesit morate {{napaka2}}</p>
+                <p class="help is-danger"> {{napaka2}}</p>
                 % end
             </td>
         </tr>
         % for id_osebe, oseba in enumerate(aktualna_fransiza.osebe):
-        <tr><td>
+        <tr>
+            <td>
                 <form method="POST" action="/odpusti/{{id_aktualne_fransize}}/{{id_osebe}}/">
                     <div class="control">
                         <button class="button is-info is-small">odpusti osebo</button>
-                    </div> 
+                    </div>
             </td>
             <td>{{ oseba.ime_priimek }}</td>
             <td>{{ oseba.starost }}</td>
             <td>{{ oseba.pozicija }}</td>
             <td>{{ oseba.mesecna_placa }}€</td>
-        </form>
-             <td> 
-                <form method="POST" action="/spremeni-osebi/{{id_aktualne_fransize}}/{{id_osebe}}/">
-                <div class="control">
-                    <button class="button is-info is-small">spremeni</a>
-                </div>  
-            
-            <td><div class="lever-right">
-   
-                <label for="sprememba1">kaj bi radi spremenili osebi:</label> 
-            <select name="sprememba" id="spremembe"> 
-                <option value="pozicijo">pozicijo</option> 
-                <option value="placo">plačo</option>   
-            </select>
-            </div>
-            <class>
-        
-                <input class="input is-small" type="text" name="kolicina/pozicija" placeholder="delovno mesto/količino">
             </form>
+            <td>
+                <form method="POST" action="/spremeni-osebi/{{id_aktualne_fransize}}/{{id_osebe}}/">
+                    <div class="control">
+                        <button class="button is-info is-small">spremeni</a>
+                    </div>
+
+            <td>
+                <div class="lever-right">
+
+                    <label for="sprememba1">kaj bi radi spremenili osebi:</label>
+                    <select name="sprememba" id="spremembe">
+                        <option value="placo">plačo</option>
+                        <option value="pozicijo">pozicijo</option>
+                    </select>
+                </div>
+                <class>
+
+                    <input class="input is-small" type="text" name="kolicina/pozicija"
+                        placeholder="delovno mesto/količino">
+                    </form>
             </td>
         </tr>
         % end
-        
+
     </tbody>
 </table>
+% else:
 
+<p>Nimate še nobene fransize. <a href="/dodaj-fransizo/">Dodajte jo.</a></p>
