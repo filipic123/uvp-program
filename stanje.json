@@ -14,8 +14,18 @@
                     "starost": 50,
                     "pozicija": "varnostnik",
                     "mesecna_placa": 1000
+                },
+                {
+                    "ime_priimek": "eijrtdhujidrt",
+                    "starost": 23,
+                    "pozicija": "ert",
+                    "mesecna_placa": 30
                 }
             ]
+        },
+        {
+            "lokacija": "jdfhjdfh",
+            "osebe": []
         }
     ]
 }

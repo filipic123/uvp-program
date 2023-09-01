@@ -103,7 +103,7 @@ class Oseba:
         self.mesecna_placa = mesecna_placa
     
 
-    def spremeba_place(self, kolicina):
+    def sprememba_place(self, kolicina):
         self.mesecna_placa = self.mesecna_placa +  int(kolicina)
     
     def sprememba_pozicije(self, nova_pozicija):
