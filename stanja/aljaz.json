@@ -2,47 +2,22 @@
     "fransize": [
         {
             "lokacija": "ljubljana",
-            "osebe": [
-                {
-                    "ime_priimek": "nejc",
-                    "starost": "23",
-                    "pozicija": "banka",
-                    "mesecna_placa": 900
-                },
-                {
-                    "ime_priimek": "js",
-                    "starost": "23",
-                    "pozicija": "jabolka",
-                    "mesecna_placa": 900
-                },
-                {
-                    "ime_priimek": "nejc",
-                    "starost": "23",
-                    "pozicija": "jabolka",
-                    "mesecna_placa": 900
-                }
-            ]
+            "osebe": []
         },
         {
             "lokacija": "ptuj",
             "osebe": [
                 {
                     "ime_priimek": "asd",
-                    "starost": "24",
-                    "pozicija": "123",
-                    "mesecna_placa": 1023
+                    "starost": 24,
+                    "delovno_mesto": "pomoč kupcem",
+                    "mesecna_placa": 1203
                 },
                 {
                     "ime_priimek": "nejc",
-                    "starost": "24",
-                    "pozicija": "jabolka",
-                    "mesecna_placa": 900
-                },
-                {
-                    "ime_priimek": "nejc",
-                    "starost": "23",
-                    "pozicija": "jabolka",
-                    "mesecna_placa": 900
+                    "starost": 24,
+                    "delovno_mesto": "oddelk s sadjem",
+                    "mesecna_placa": 3000
                 }
             ]
         },
@@ -51,33 +26,17 @@
             "osebe": [
                 {
                     "ime_priimek": "nejc",
-                    "starost": "23",
-                    "pozicija": "jabolka",
-                    "mesecna_placa": 90
+                    "starost": 23,
+                    "delovno_mesto": "oddel za mila",
+                    "mesecna_placa": 3000
                 },
                 {
                     "ime_priimek": "nejc",
-                    "starost": "23",
-                    "pozicija": "jabolka",
-                    "mesecna_placa": 90
-                },
-                {
-                    "ime_priimek": "nejc",
-                    "starost": "24",
-                    "pozicija": "banka",
-                    "mesecna_placa": 900
-                },
-                {
-                    "ime_priimek": "nejc",
-                    "starost": "asd",
-                    "pozicija": "jabolka",
-                    "mesecna_placa": 900
+                    "starost": 24,
+                    "delovno_mesto": "oddel s testeninami",
+                    "mesecna_placa": 3000
                 }
             ]
-        },
-        {
-            "lokacija": "koper",
-            "osebe": []
         }
     ]
 }

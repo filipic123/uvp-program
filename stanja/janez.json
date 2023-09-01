@@ -15,7 +15,18 @@
                     "delovno_mesto": "varnostnik",
                     "mesecna_placa": 1500
                 }
-            ]    
+            ]
+        },
+        {
+            "lokacija": "ptuj",
+            "osebe": [
+                {
+                    "ime_priimek": "nejc",
+                    "starost": "24",
+                    "delovno_mesto": "garaža",
+                    "mesecna_placa": 2000
+                }
+            ]
         }
     ]
 }

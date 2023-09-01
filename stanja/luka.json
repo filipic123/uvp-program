@@ -1,21 +1,21 @@
 {
     "fransize": [
         {
-            "lokacija": "Ljubljana",
+            "lokacija": "ljubljana",
             "osebe": [
                 {
-                    "ime_priimek": "Sara",
+                    "ime_priimek": "sara",
                     "starost": 40,
                     "delovno_mesto": "blagajna",
                     "mesecna_placa": 1400
                 },
                 {
-                    "ime_priimek": "Janez",
+                    "ime_priimek": "janez",
                     "starost": 50,
                     "delovno_mesto": "varnostnik",
                     "mesecna_placa": 1500
                 }
-            ]    
+            ]
         }
     ]
 }
