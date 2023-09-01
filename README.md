@@ -1,6 +1,9 @@
 # Franšize
 Pozdravljeni v urejanju in nadzoru franšiz! 
-Program je namnjen lastnikom večjih podtjeti z več franšizami. Omogoča pregled nad zaposlenimi delovnimi mesti in nasploh njihovih podatkov. Omogoča tudi zaposlovanje novih ljudi ter menjavo delovnega mesta ter sprememinjaje plače med.
+Program je namenjen lastnikom večjih podjeti z več franšizami. (Mercator, Špar, ...)
+Omogoča pregled nad zaposlenimi in njihovimi podtaki. Omogoča tudi zaposlovanje novih ljudi, menjavo delovnega mesta ter spreminjanje plače.
 
-Program se zažene z run 'spletni_vmesnik.py'.
+Program se zažene z desnim klikom v kodi: 
+run python ---> run python file in therminal.
+
 
