@@ -1,5 +1,6 @@
 import json
 
+
 class Stanje:
     def __init__(self, fransize):
         self.fransize = fransize
@@ -65,7 +66,6 @@ class Fransiza:
             if oseba.ime_priimek == nova_oseba.ime_priimek:
                 return {"ime_priimek": "Ta oseba že dela tukaj"}
 
-
     def placa_celotne_fransize(self):
         placa_fransize = 0
         for oseba in self.osebe:
@@ -96,24 +96,24 @@ class Fransiza:
 
 
 class Oseba:
-    def __init__(self, ime_priimek, starost, pozicija, mesecna_placa):
+    def __init__(self, ime_priimek, starost, delovno_mesto, mesecna_placa):
         self.ime_priimek = ime_priimek
         self.starost = starost
-        self.pozicija = pozicija
+        self.delovno_mesto = delovno_mesto
         self.mesecna_placa = mesecna_placa
     
 
     def sprememba_place(self, kolicina):
         self.mesecna_placa = self.mesecna_placa +  int(kolicina)
     
-    def sprememba_pozicije(self, nova_pozicija):
-        self.pozicija = nova_pozicija
+    def sprememba_pozicije(self, nova_delovno_mesto):
+        self.delovno_mesto = nova_delovno_mesto
 
     def v_slovar(self):
         return {
             "ime_priimek": self.ime_priimek,
             "starost": self.starost,
-            "pozicija": self.pozicija,
+            "delovno_mesto": self.delovno_mesto,
             "mesecna_placa": self.mesecna_placa
         }
 
@@ -122,6 +122,6 @@ class Oseba:
         return Oseba(
             slovar["ime_priimek"],
             slovar["starost"],
-            slovar["pozicija"],
+            slovar["delovno_mesto"],
             slovar["mesecna_placa"]
         )

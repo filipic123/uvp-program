@@ -1,7 +1,6 @@
 import bottle
-from datetime import date
 from model import Stanje, Fransiza, Oseba
-import json
+
 
 SIFRIRNI_KLJUC = "To je poseben šifrirni ključ"
 
@@ -24,7 +23,6 @@ def stanje_trenutnega_uporabnika():
         stanje = Stanje.iz_datoteke("stanje.json")
         stanje.v_datoteko(ime_datoteke)
     return stanje
-
 
 def shrani_stanje_trenutnega_uporabnika(stanje):
     uporabnisko_ime = bottle.request.get_cookie(
@@ -112,10 +110,10 @@ def dodaj_osebo(id_fransize):
     fransiza = stanje.fransize[id_fransize]
     oseba = bottle.request.forms.getunicode("ime_priimek")
     starost = bottle.request.forms.getunicode("starost")
-    pozicija = bottle.request.forms.getunicode("pozicija")
+    delovno_mesto = bottle.request.forms.getunicode("delovno_mesto")
     mesecna_placa = bottle.request.forms.getunicode("mesecna_placa")
     napaka = "vnesiti morate pozitivno število"
-    if not pozicija or not oseba or not starost or not mesecna_placa:
+    if not delovno_mesto or not oseba or not starost or not mesecna_placa:
         napaka = "zapolnite vsa polja"
         return bottle.template("fransiza.html", fransize=stanje.fransize,
                                aktualna_fransiza=fransiza,
@@ -126,46 +124,47 @@ def dodaj_osebo(id_fransize):
                                aktualna_fransiza=fransiza,
                                id_aktualne_fransize=id_fransize,
                                napaka1=napaka, napaka2=None, napaka3=None)
-    elif int(mesecna_placa) < 0:
+    elif int(mesecna_placa) < 1202:
+        napaka = "plača ne biti nižja od minimalne plače (1203 €)"
         return bottle.template("fransiza.html", fransize=stanje.fransize,
                                aktualna_fransiza=fransiza,
                                id_aktualne_fransize=id_fransize,
                                napaka1=None, napaka2=napaka, napaka3=None)
     else:
-        oseba1 = Oseba(oseba, starost, pozicija, int(mesecna_placa))
+        oseba1 = Oseba(oseba, starost, delovno_mesto, int(mesecna_placa))
         fransiza.dodaj_osebo(oseba1)
         shrani_stanje_trenutnega_uporabnika(stanje)
         bottle.redirect(url_fransize(id_fransize))
 
 
 @bottle.post("/spremeni-osebi/<id_fransize:int>/<id_osebe:int>/")
-def spermeni_osebo(id_fransize, id_osebe):
+def spremeni_osebo(id_fransize, id_osebe):
     stanje = stanje_trenutnega_uporabnika()
     fransiza = stanje.fransize[id_fransize]
     oseba = fransiza.osebe[id_osebe]
     sprememba = bottle.request.forms.getunicode("sprememba")
-    kolicina_pozicija = bottle.request.forms.getunicode("kolicina/pozicija")
+    kolicina_delovno_mesto = bottle.request.forms.getunicode("kolicina/delovno_mesto")
     if sprememba == "placo":
         try:
-            int(kolicina_pozicija)
-            if -int(kolicina_pozicija) > oseba.mesecna_placa:
-                napaka = "plača ne more pasti pod 0"
+            int(kolicina_delovno_mesto)
+            if -int(kolicina_delovno_mesto) > oseba.mesecna_placa - 1203:
+                napaka = "plača ne more pasti pod minimalno plačo (1203 €)"
                 return bottle.template("fransiza.html", fransize=stanje.fransize,
                                        aktualna_fransiza=fransiza,
                                        id_aktualne_fransize=id_fransize,
                                        napaka1=None, napaka2=None, napaka3=napaka)
             else:
-                oseba.sprememba_place(kolicina_pozicija)
+                oseba.sprememba_place(kolicina_delovno_mesto)
                 shrani_stanje_trenutnega_uporabnika(stanje)
                 bottle.redirect(url_fransize(id_fransize))
         except ValueError:
-            napaka = "sprememba mora biti pozitivno število"
+            napaka = "sprememba mora biti celo število"
             return bottle.template("fransiza.html", fransize=stanje.fransize,
                                    aktualna_fransiza=fransiza,
                                    id_aktualne_fransize=id_fransize,
                                    napaka1=None, napaka2=None, napaka3=napaka)
     if sprememba == "pozicijo":
-        oseba.sprememba_pozicije(kolicina_pozicija)
+        oseba.sprememba_pozicije(kolicina_delovno_mesto)
         shrani_stanje_trenutnega_uporabnika(stanje)
         bottle.redirect(url_fransize(id_fransize))
 

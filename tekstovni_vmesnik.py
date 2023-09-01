@@ -67,7 +67,7 @@ def prikaz_osebe_0(oseba):
     
 
 def prikaz_osebe_1(oseba):
-    return f"{oseba.ime_priimek}, {oseba.pozicija} "
+    return f"{oseba.ime_priimek}, {oseba.delovno_mesto} "
     
 
 def prikaz_osebe_2(oseba):
@@ -114,7 +114,7 @@ def pregled_oseb():
     if len(fransiza.osebe) == 0:
         print("Tukaj še ne dela nobena oseba")
     for oseba in fransiza.osebe:
-        print(f"ime in priimek: {oseba.ime_priimek}, starost: {oseba.starost}, pozicija: {oseba.pozicija}, mesečna plača: {oseba.mesecna_placa}")
+        print(f"ime in priimek: {oseba.ime_priimek}, starost: {oseba.starost}, delovno_mesto: {oseba.delovno_mesto}, mesečna plača: {oseba.mesecna_placa}")
     input("Pritisnite enter za nazaj> ")
 
 
@@ -140,9 +140,9 @@ def sprememba_place():
 def spremeni_pozicijo():
     fransiza = izberi_fransizo(stanje)
     oseba = izberi_osebo_1(fransiza)
-    print(f"Trentuna pozicija: {oseba.pozicija}")
-    nova_pozicija = input("nova pozicija> ")
-    oseba.sprememba_pozicije(nova_pozicija)
+    print(f"Trentuna delovno_mesto: {oseba.delovno_mesto}")
+    nova_delovno_mesto = input("nova delovno_mesto> ")
+    oseba.sprememba_pozicije(nova_delovno_mesto)
 
 
 def spremeni_lokacijo():
@@ -151,9 +151,9 @@ def spremeni_lokacijo():
     ime = oseba.ime_priimek
     starost = oseba.starost
     placa = oseba.mesecna_placa
-    pozicija = oseba.pozicija
+    delovno_mesto = oseba.delovno_mesto
     nova_fransiza = input("Kam jo želite premakniti?> ")
-    nova_oseba = Oseba(ime, starost, pozicija, placa)
+    nova_oseba = Oseba(ime, starost, delovno_mesto, placa)
     nova_fransiza.dodaj_osebo(nova_oseba)
     fransiza.osebe.remove(oseba)
 
@@ -180,9 +180,9 @@ def dodaj_osebo():
                input("Pritisnite enter za nazaj>")
     if not je_drugje and not ni_fransize:   
         starost = preveri_startost()    
-        pozicija = input("pozicija> ")
+        delovno_mesto = input("delovno_mesto> ")
         mesecna_placa = preveri_placo()
-        nova_oseba = Oseba(ime_priimek, starost, pozicija, mesecna_placa)
+        nova_oseba = Oseba(ime_priimek, starost, delovno_mesto, mesecna_placa)
         fransiza.dodaj_osebo(nova_oseba)
 
 
